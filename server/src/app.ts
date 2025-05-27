@@ -1,26 +1,21 @@
 import { Server } from '@hapi/hapi';
+import { registerRoutes } from './plugins/routes';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const init = async (): Promise<void> => {
   const server = new Server({
-    port: 3001,
+    port: parseInt(process.env.PORT || '3001'),
     host: 'localhost'
   });
 
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-      return 'Bienvenue dans la Rébellion, jeune Padawan !';
-    }
-  });
-
+  await registerRoutes(server);
   await server.start();
-  console.log('🚀 Serveur lancé sur :', server.info.uri);
+  console.log('🚀 Server running on :', server.info.uri);
 };
 
-// Gestion des erreurs globales
 process.on('unhandledRejection', (err: unknown) => {
-  console.error('Erreur non gérée :', err);
+  console.error(err);
   process.exit(1);
 });
 

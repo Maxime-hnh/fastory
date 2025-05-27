@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "start:dev": "nodemon src/app.ts",
+    "dev": "ts-node src/app.ts",
     "start:debug": "nodemon --inspect=9229 src/app.ts"
   },
   "keywords": [],
@@ -14,7 +14,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
-    "@hapi/hapi": "^21.4.0"
+    "@hapi/hapi": "^21.4.0",
+    "dotenv": "^16.5.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
