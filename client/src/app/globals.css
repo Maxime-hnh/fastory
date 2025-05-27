@@ -76,6 +76,9 @@
   --sidebar-accent-foreground: hsl(0, 0%, 15%);
   --sidebar-border: hsl(0, 0%, 90%);
   --sidebar-ring: hsl(0, 0%, 70%);
+  --font-sans: 'Sora', sans-serif;
+  --font-serif: 'Sora', serif;
+  --font-mono: 'Sora', monospace;
 }
 
 .dark {

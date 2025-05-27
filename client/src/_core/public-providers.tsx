@@ -1,16 +1,19 @@
 
+
+"use client"
 import { PropsWithChildren } from "react";
 import Header from "@/_components/layout/header";
 import Footer from "@/_components/layout/footer";
 import { Toaster } from "@/_components/ui/sonner";
-import IsMobileObserver from "@/_core/is-mobile-observer";
-import { NextIntlClientProvider } from "next-intl";
+// import IsMobileObserver from "@/_core/is-mobile-observer";
+import { Provider } from 'react-redux'
+import { store } from "../_stores/store";
 
 export function PublicProviders(props: PropsWithChildren) {
 
   return (
-    <NextIntlClientProvider>
-      <IsMobileObserver />
+    <Provider store={store}>
+      {/* <IsMobileObserver /> */}
       <Toaster />
       <div className="flex min-h-screen flex-col" id="rootLayout">
         <Header />
@@ -19,6 +22,6 @@ export function PublicProviders(props: PropsWithChildren) {
 
         <Footer />
       </div>
-    </NextIntlClientProvider>
-  );
+    </Provider>
+  );  
 }

@@ -1,8 +1,7 @@
-import { useAuthStore } from "@/_stores/auth.store";
 
 export function authHeader(type: 'json' | 'form' | 'text' = "json"): HeadersInit {
   // return authorization header with jwt token
-  const loggedUser = useAuthStore.getState().loggedUser;
+  const loggedUser = null
   let header: HeadersInit = {};
   switch (type) {
     case "json":
@@ -26,13 +25,13 @@ export function authHeader(type: 'json' | 'form' | 'text' = "json"): HeadersInit
       break;
   }
 
-  if (loggedUser && loggedUser.accessToken) {
-    header["Authorization"] = "Bearer " + loggedUser.accessToken;
-  }
+  // if (loggedUser && loggedUser.accessToken) {
+  //   header["Authorization"] = "Bearer " + loggedUser.accessToken;
+  // }
 
-  if (loggedUser && loggedUser.refreshToken) {
-    header["x-refresh-token"] = loggedUser.refreshToken
-  }
+  // if (loggedUser && loggedUser.refreshToken) {
+  //   header["x-refresh-token"] = loggedUser.refreshToken
+  // }
 
   return header;
 }

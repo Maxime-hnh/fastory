@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins, Sora, IBM_Plex_Sans } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { PublicProviders } from "@/_core/public-providers";
 import { cookies } from "next/headers";
-import { hasLocale } from "next-intl";
+import './globals.css';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,30 +32,34 @@ const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"]
 });
 
-export async function CommonLayoutWrapper({
+export const metadata: Metadata = {
+  title: "Title",
+  description: "Description",
+  icons: {
+    icon: '/favicon.ico'
+  },
+};
+
+export default async function RootLayout({
   children,
-  locale
 }: {
   children: React.ReactNode;
-  locale: string;
 }) {
 
-
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
 
   const theme = (await cookies()).get('theme')?.value || 'light';
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${sora.variable} ${ibmPlexSans.variable} ${theme}`}
       >
-       <NextIntlClientProvider>
+        <PublicProviders>
           {children}
-       </NextIntlClientProvider>
+        </PublicProviders>
+
       </body>
     </html>
+
   );
 }

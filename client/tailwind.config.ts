@@ -18,6 +18,11 @@ const config: Config = {
       '2xl': '100rem',
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", "sans-serif"],
+        serif: ["var(--font-serif)", "serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
       borderRadius: {
         lg: "var(--radius)",
       },
