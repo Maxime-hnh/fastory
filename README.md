@@ -1,11 +1,12 @@
 # Exercice SWAPI
 
-Projet composé d'un client Next.js et d'un serveur Hapi.js.
+Projet composé d'un client Next.js et d'un serveur Hapi.js qui interagit avec l'API Star Wars (SWAPI).
 
 ## Prérequis
 
 - [Node.js](https://nodejs.org/) (v18 ou supérieur recommandé)
 - [pnpm](https://pnpm.io/) (v10.10.0 ou supérieur)
+- [Visual Studio Code](https://code.visualstudio.com/) (recommandé pour le débogage)
 
 ## Structure du projet
 
@@ -34,6 +35,52 @@ Le projet est divisé en deux parties principales :
    pnpm install
    ```
 
+## Configuration
+
+### Configuration de Nodemon
+
+Le serveur utilise Nodemon pour le rechargement automatique pendant le développement. La configuration se trouve dans `server/nodemon.json` :
+
+```json
+{
+  "watch": ["src"],
+  "ext": "ts",
+  "exec": "ts-node ./src/app.ts"
+}
+```
+
+Cette configuration permet à Nodemon de surveiller les fichiers `.ts` dans le dossier `src` et d'exécuter le serveur avec `ts-node`.
+
+### Configuration du débogage VS Code
+
+Le projet inclut une configuration de débogage pour VS Code dans `.vscode/launch.json` :
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "development",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "start:debug"],
+      "cwd": "${workspaceFolder}/server",
+      "restart": true,
+      "sourceMaps": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
+```
+
+Pour utiliser cette configuration :
+1. Ouvrez VS Code dans le dossier racine du projet
+2. Accédez à l'onglet "Exécuter et déboguer" (ou appuyez sur `Ctrl+Shift+D`)
+3. Sélectionnez "development" dans le menu déroulant
+4. Cliquez sur le bouton de lecture vert ou appuyez sur `F5`
+
 ## Lancement du projet
 
 ### Démarrer le serveur backend
@@ -50,8 +97,7 @@ Pour le mode debug :
 pnpm start:debug
 ```
 
-Le serveur peut également être lancé en mode débogage depuis l'onglet **"Exécuter et déboguer"** de VS Code.
-
+Le serveur peut également être lancé en mode débogage depuis l'onglet **"Exécuter et déboguer"** de VS Code comme expliqué ci-dessus.
 
 ### Démarrer le client frontend
 
@@ -77,9 +123,16 @@ L'application client démarrera sur `http://localhost:3000` (ou le prochain port
 
 ### Serveur
 
-- `pnpm dev` : Lance le serveur en mode développement
+- `pnpm dev` : Lance le serveur en mode développement avec Nodemon pour le rechargement automatique
 - `pnpm start` : Lance le serveur en mode production
-- `pnpm start:debug` : Lance le serveur en mode debug
+- `pnpm start:debug` : Lance le serveur en mode debug (utilisé par la configuration VS Code)
+
+## API Backend
+
+Le serveur expose plusieurs endpoints pour interagir avec l'API SWAPI. Les principales routes incluent :
+- `/api/people` : Récupération des personnages
+- `/api/planets` : Récupération des planètes
+- `/api/starships` : Récupération des vaisseaux spatiaux
 
 ## Technologies utilisées
 
@@ -96,4 +149,25 @@ L'application client démarrera sur `http://localhost:3000` (ou le prochain port
 ### Serveur
 - Hapi.js
 - TypeScript
-- Nodemon (développement)
+- Nodemon (pour le rechargement automatique en développement)
+
+## Déploiement
+
+Pour déployer l'application en production :
+
+1. Construisez le client :
+   ```bash
+   cd client
+   pnpm build
+   ```
+
+2. Déployez le serveur et le client sur votre plateforme préférée (Vercel, Netlify, etc.)
+
+## Contribution
+
+Si vous souhaitez contribuer à ce projet :
+
+1. Créez une branche pour votre fonctionnalité (`git checkout -b feature/amazing-feature`)
+2. Committez vos changements (`git commit -m 'Add some amazing feature'`)
+3. Poussez vers la branche (`git push origin feature/amazing-feature`)
+4. Ouvrez une Pull Request
