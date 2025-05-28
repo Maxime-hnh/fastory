@@ -85,6 +85,8 @@ Pour utiliser cette configuration :
 
 ### Démarrer le serveur backend
 
+Le serveur peut être lancé en mode débogage depuis l'onglet **"Exécuter et déboguer"** de VS Code.
+
 ```bash
 cd server
 pnpm dev
@@ -96,8 +98,6 @@ Pour le mode debug :
 ```bash
 pnpm start:debug
 ```
-
-Le serveur peut également être lancé en mode débogage depuis l'onglet **"Exécuter et déboguer"** de VS Code comme expliqué ci-dessus.
 
 ### Démarrer le client frontend
 
