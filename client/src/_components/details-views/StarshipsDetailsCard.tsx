@@ -1,6 +1,6 @@
 import { Starship } from "@/_types/starships.type";
 import { Card, CardContent, CardFooter } from "../ui/card";
-import { ArrowRight, Calendar, Mars, Venus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { formattedDate } from "@/_helpers/utils";
 import { Button } from "../ui/button";
 import { handleLinkClick } from "@/_helpers/utils";
@@ -11,7 +11,7 @@ interface StarshipsDetailsCardProps {
 export default function StarshipsDetailsCard({ data }: StarshipsDetailsCardProps) {
 
   return (
-    <Card id="peopleDetailsCard" >
+    <Card id="starshipsDetailsCard" >
       <CardContent className="flex flex-col sm:flex-row gap-4">
 
         {/*LeftContent*/}
