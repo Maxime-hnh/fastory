@@ -2,7 +2,6 @@ import { Types } from '@/_schemas/search.schema';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface SearchState {
-  term: string;
   data: { type: Types; items: any[] }[];
   isLoading: boolean;
   error: string | null;
@@ -10,7 +9,6 @@ interface SearchState {
 }
 
 const initialState: SearchState = {
-  term: '',
   data: [],
   isLoading: false,
   error: null,
@@ -21,10 +19,7 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setSearchTerm(state, action: PayloadAction<string>) {
-      state.term = action.payload;
-    },
-    setLoading(state, action: PayloadAction<boolean>) {
+    setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
     setResults(state, action: PayloadAction<SearchState['data']>) {
@@ -38,7 +33,6 @@ const searchSlice = createSlice({
     },
     resetSearch(state) {
       state.data = [];
-      state.term = '';
       state.isLoading = false;
       state.error = null;
       state.activeTab = Types.FILMS;
@@ -46,5 +40,5 @@ const searchSlice = createSlice({
   },
 });
 
-export const { setSearchTerm, setLoading, setResults, setError, setActiveTab, resetSearch } = searchSlice.actions;
+export const { setIsLoading, setResults, setError, setActiveTab, resetSearch } = searchSlice.actions;
 export default searchSlice.reducer;

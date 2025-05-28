@@ -6,7 +6,6 @@ import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import { ThemeToggle } from '../ui/theme-toggle';
 
 
 export default function Header() {
@@ -26,7 +25,6 @@ export default function Header() {
           <Link href="/template-page">link 1</Link>
           <Link href="/">link 2</Link>
           <Link href="/">link 3</Link>
-          <ThemeToggle />
         </nav>
         <div></div>
       </div>

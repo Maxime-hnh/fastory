@@ -1,87 +1,87 @@
 "use client"
 import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Search, SearchSchema, Types } from "@/_schemas/search.schema";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { Types } from "@/_schemas/search.schema";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/_stores/store";
-import { setSearchTerm, setLoading, setResults, setError, setActiveTab } from "@/_stores/searchSlice";
+import { setIsLoading, setResults, setError, setActiveTab, resetSearch } from "@/_stores/searchSlice";
 import { swapiService } from "@/_services/swapi.service";
 import { RootState } from "@/_stores/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { debounce } from "@/_helpers/utils";
 import { useMemo } from "react";
+import { Loader2Icon, SearchIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function SearchForm() {
 
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, activeTab } = useSelector((state: RootState) => state.search);
   const { search } = swapiService;
+  const [query, setQuery] = useState("");
+  const pathname = usePathname();
 
-  const form = useForm<Search>({
-    resolver: zodResolver(SearchSchema),
-    defaultValues: {
-      search: ""
-    }
-  })
+  const debouncedSearch = useMemo(
+    () =>
+      debounce(async (searchValue: string) => {
+        const cleanedSearchValue = searchValue.trim();
 
-
-  const debouncedSearch = useMemo(() => debounce(async (term: string) => {
-    if (!term.trim()) return;
-    if (term.length < 3) return;
-
-    dispatch(setSearchTerm(term));
-    dispatch(setLoading(true));
-    dispatch(setError(null));
-
-    try {
-      const results = await search(term);
-      dispatch(setResults(results));
-      if (results.length > 0) {
-        const firstType = results[0].type as Types;
-        const currentTypes = results.map((r: any) => r.type);
-        const currentTab = activeTab;
-        if (!currentTypes.includes(currentTab)) {
-          dispatch(setActiveTab(firstType));
+        if (!cleanedSearchValue || cleanedSearchValue.length < 2) {
+          dispatch(resetSearch());
+          return;
         }
-      }
-    } catch (error: any) {
-      dispatch(setError(error?.message || "Erreur inattendue"));
-    } finally {
-      dispatch(setLoading(false));
-    }
-  }, 500), [dispatch]);
+        dispatch(setIsLoading(true));
+        dispatch(setError(null));
+
+        try {
+          const results = await search(cleanedSearchValue);
+          dispatch(setResults(results));
+          if (results.length > 0) {
+            const firstType = results[0].type;
+            const currentTypes = results.map((cat: any) => cat.type);
+            if (!currentTypes.includes(activeTab)) {
+              dispatch(setActiveTab(firstType));
+            }
+          }
+        } catch (error: any) {
+          dispatch(setError(error?.message || "Erreur inattendue"));
+        } finally {
+          dispatch(setIsLoading(false));
+        }
+      }, 500),
+    [dispatch, activeTab]
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    debouncedSearch(value);
+  };
+
 
   useEffect(() => {
-    const subscription = form.watch(({ search }) => {
-      debouncedSearch(search || "");
-    });
-
-    return () => subscription.unsubscribe();
-  }, [form.watch, debouncedSearch]);
+    dispatch(resetSearch());
+    setQuery("");
+  }, [pathname]);
 
 
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => e.preventDefault()} className="flex items-center gap-2">
-        <FormField
-          control={form.control}
-          name="search"
-          render={({ field }) => (
-
-            <FormItem>
-              <FormLabel>Recherche</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Luke"
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
+    <form onSubmit={(e) => e.preventDefault()} className="w-full flex justify-center">
+      <div className="relative w-full max-w-[500px] mt-8">
+        {isLoading
+          ? <Loader2Icon
+            className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground animate-spin"
+          />
+          : <SearchIcon
+            className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
+          />
+        }
+        <Input
+          value={query}
+          onChange={handleChange}
+          className="pl-10 h-[40px] w-full"
+          placeholder="Search..."
         />
-      </form>
-    </Form>
+      </div>
+    </form>
   )
 }
