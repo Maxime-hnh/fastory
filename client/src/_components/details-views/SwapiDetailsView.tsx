@@ -2,7 +2,7 @@
 
 import { useSwapiQuery } from "@/_queries/useSwapiQuery";
 import { notFound } from "next/navigation";
-import { Types } from "@/_schemas/search.schema";
+import { Types } from "@/_helpers/constants";
 import PeopleDetailsCard from "./PeopleDetailsCard";
 import FilmsDetailsCard from "./FilmsDetailsCard";
 import PlanetsDetailsCard from "./PlanetsDetailsCard";

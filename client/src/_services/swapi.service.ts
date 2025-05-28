@@ -9,7 +9,7 @@ class SwapiService {
       method: 'GET',
       headers: authHeader(),
     }
-    return await handleResponse(await fetch(`/api/search/?q=${encodeURI(query)}`, requestOptions));
+    return await handleResponse(await fetch(`/api/swapi/search/?q=${encodeURI(query)}`, requestOptions));
   };
 
   getById = async (type: string, id: string): Promise<any> => {
@@ -17,7 +17,7 @@ class SwapiService {
       method: 'GET',
       headers: authHeader(),
     }
-    return await handleResponse(await fetch(`/api/details/${type}/${id}`, requestOptions));
+    return await handleResponse(await fetch(`/api/swapi/details/${type}/${id}`, requestOptions));
   };
 }
 

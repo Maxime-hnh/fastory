@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import PreviewCard from "./PreviewCard";
 import { Fragment } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { Types, TypesIconMap } from "@/_schemas/search.schema";
 import PreviewCardSkeleton from "./PreviewCardSkeleton";
 import { setActiveTab } from "@/_stores/searchSlice";
 import { useDispatch } from "react-redux";
+import { Types, TypesIconMap } from "@/_helpers/constants";
 
 export default function TabsResults() {
 

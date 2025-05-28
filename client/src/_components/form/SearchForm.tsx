@@ -1,6 +1,5 @@
 "use client"
-import { Input } from "./ui/input";
-import { Types } from "@/_schemas/search.schema";
+import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/_stores/store";
 import { setIsLoading, setResults, setError, setActiveTab, resetSearch } from "@/_stores/searchSlice";

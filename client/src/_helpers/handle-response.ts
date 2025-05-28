@@ -1,6 +1,4 @@
 import { toast } from "sonner";
-import { retryOriginalRequest } from "./helpers";
-import { authService } from "@/_services/auth.service";
 
 export class ApiError extends Error {
   errorCode: number;

@@ -4,19 +4,20 @@ import { ServerRoute } from '@hapi/hapi';
 const swapiRoutes: ServerRoute[] = [
   {
     method: 'GET',
-    path: '/search',
+    path: '/swapi/search',
     handler: swapiController.search
   },
   {
     method: 'GET',
-    path: '/details/{type}/{id}',
+    path: '/swapi/details/{type}/{id}',
     handler: swapiController.getById
   },
   {
     method: 'GET',
-    path: '/all',
+    path: '/swapi/all',
     handler: swapiController.getAllData
   }
+  
 ];
 
 export { swapiRoutes };

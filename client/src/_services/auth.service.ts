@@ -1,7 +1,6 @@
-import { authHeader } from "@/_helpers/auth-header";
 import { handleResponse } from "@/_helpers/handle-response";
-import { AuthRequest } from "@/_types/auth-request.interface";
-import { AuthenticatedUser } from "@/_types/authenticated-user.interface.ts";
+import { AuthRequest } from "@/_schemas/auth.schema";
+import { AuthenticatedUser } from "@/_types/authenticated-user.type";
 
 class AuthService {
 
@@ -9,12 +8,17 @@ class AuthService {
   }
 
   login = async (values: AuthRequest): Promise<AuthenticatedUser> => {
+    const token = btoa(`${values.username}:${values.password}`);
+
     const requestOptions = {
-      method: 'POST',
-      headers: authHeader(),
-      body: JSON.stringify(values),
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${token}`,
+      }
     };
-    return await handleResponse(await fetch(`/api/auth/login`, requestOptions));
+    const response = await handleResponse(await fetch(`/api/auth/me`, requestOptions));
+    const user = { ...response.user, token };
+    return user;
   }
 }
 

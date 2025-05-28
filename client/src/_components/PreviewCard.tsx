@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { formattedDate } from "@/_helpers/utils";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Types, TypesIconMap } from "@/_schemas/search.schema";
+import { Types, TypesIconMap } from "@/_helpers/constants";
 
 interface PreviewCardProps {
   data: any;
@@ -23,7 +23,7 @@ export default function PreviewCard({ data, type }: PreviewCardProps) {
         <div className="flex flex-col h-full justify-between">
           <h3 className="font-semibold">{data.title || data.name}</h3>
           <p className="text-xs text-muted-foreground">
-            {data.release_date ? formattedDate(data.release_date)
+            {data.release_date ? formattedDate(new Date(data.release_date))
               : data.classification
               || data.model
               || data.birth_year

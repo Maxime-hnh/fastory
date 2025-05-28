@@ -1,3 +1,7 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+
 export const handleLinkClick = (link: string) => {
   window.open(link, '_blank');
 };
@@ -22,4 +26,8 @@ export function formattedDate(date: Date) {
       day: 'numeric'
     }
   ).format(date)
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

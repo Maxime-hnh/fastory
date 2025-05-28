@@ -1,6 +1,6 @@
 import { Specie } from "@/_types/species.type";
 import { Card, CardContent, CardFooter } from "../ui/card";
-import { ArrowRight, Calendar, Mars, Venus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { formattedDate } from "@/_helpers/utils";
 import { Button } from "../ui/button";
 import { handleLinkClick } from "@/_helpers/utils";

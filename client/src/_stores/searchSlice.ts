@@ -1,4 +1,4 @@
-import { Types } from '@/_schemas/search.schema';
+import { Types } from "@/_helpers/constants";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface SearchState {
