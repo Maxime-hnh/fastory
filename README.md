@@ -38,6 +38,8 @@ Le projet est divisé en deux parties principales :
 
 ### Démarrer le serveur backend
 
+Le serveur peut être lancé en mode débogage depuis l'onglet **"Exécuter et déboguer"** de VS Code.
+
 ```bash
 cd server
 pnpm dev
@@ -49,9 +51,6 @@ Pour le mode debug :
 ```bash
 pnpm start:debug
 ```
-
-Le serveur peut également être lancé en mode débogage depuis l'onglet **"Exécuter et déboguer"** de VS Code.
-
 
 ### Démarrer le client frontend
 
