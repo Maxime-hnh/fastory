@@ -20,7 +20,7 @@ export default function PeopleDetailsCard({ data }: PeopleDetailsCardProps) {
       <CardContent className="flex flex-col sm:flex-row gap-4">
 
         {/*LeftContent*/}
-        <div className="flex items-center flex-col gap-2">
+        <div className="flex items-center flex-col gap-2 sm:min-w-[272px]">
           {/*Identity*/}
           <div className="flex items-center flex-col gap-2 border-b pb-2 border-border w-full">
             <div className="h-[100px] w-[100px] bg-muted rounded-sm">
@@ -65,7 +65,7 @@ export default function PeopleDetailsCard({ data }: PeopleDetailsCardProps) {
         </div>
 
         {/*RightContent*/}
-        <div className="grid grid-cols-1 gap-2  sm:border-l sm:border-border sm:pl-2 md:pl-4 lg:pl-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="w-full grid grid-cols-1 gap-2  sm:border-l sm:border-border sm:pl-2 md:pl-4 lg:pl-8 md:grid-cols-2 lg:grid-cols-3">
 
           <div className="col-span-1">
             <span className="text-xs">Films : </span>
