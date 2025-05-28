@@ -116,8 +116,6 @@ L'application client démarrera sur `http://localhost:3000` (ou le prochain port
 - `pnpm build` : Construit l'application pour la production
 - `pnpm start` : Démarre l'application en mode production
 - `pnpm lint` : Exécute le linter
-- `pnpm test` : Exécute les tests
-- `pnpm test:ui` : Exécute les tests avec interface utilisateur
 
 ### Serveur
 
