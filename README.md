@@ -125,13 +125,22 @@ L'application client démarrera sur `http://localhost:3000` (ou le prochain port
 
 ## API Backend
 
-Le serveur expose 3 endpoints pour interagir avec l'API SWAPI. Les routes incluent :
+Le serveur expose plusieurs endpoints pour interagir avec l'API SWAPI et gérer l'authentification :
+
+### 📦 SWAPI
+
 - `/api/swapi/search` : Recherche sur toutes les catégories
 - `/api/swapi/details/{type}/{id}` : Récupération d'une entité
 - `/api/swapi/all` : Récupération de toutes les catégories
 
+---
+
+### 🔐 Authentification
+
 - `/api/auth/me` : Utilise la stratégie `@hapi/basic` configurée globalement.
-- Identifiants : `Luk` / `DadSucks`
+
+⚠️ Cette route nécessite l’envoi de l’en-tête `Authorization` avec les identifiants codés en base64.  
+Par exemple : `Luke:DadSucks` → `Authorization: Basic THVrZTpEYWRTdWNrcw==`
 
 ## Technologies utilisées
 
