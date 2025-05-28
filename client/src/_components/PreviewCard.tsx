@@ -12,11 +12,12 @@ interface PreviewCardProps {
 export default function PreviewCard({ data, type }: PreviewCardProps) {
 
   const Icon = TypesIconMap[type].icon;
-
+  const id = new URL(data.url).pathname.split("/").filter(Boolean).pop()
+  
   return (
     <div className="grid items-center gap-4 px-4 py-5 md:grid-cols-4">
       <div className="flex items-center gap-2 order-2 md:order-none">
-        <div className="flex items-center justify-center rounded-md h-14 w-16 bg-muted">
+        <div className="flex items-center justify-center rounded-md h-14 w-16 bg-muted animate-pulse">
           <Icon />
         </div>
         <div className="flex flex-col h-full justify-between">
@@ -24,9 +25,9 @@ export default function PreviewCard({ data, type }: PreviewCardProps) {
           <p className="text-xs text-muted-foreground">
             {data.release_date ? formattedDate(data.release_date)
               : data.classification
-                || data.model
-                || data.birth_year
-                || ""
+              || data.model
+              || data.birth_year
+              || ""
             }
           </p>
         </div>
@@ -39,7 +40,7 @@ export default function PreviewCard({ data, type }: PreviewCardProps) {
       </p>
       <div className="order-3 md:order-none inline-flex items-center shrink-0 justify-center sm:justify-end">
         <Button asChild className="  !text-secondary">
-          <Link href="/">
+          <Link href={`/details/${type}/${id}`}>
             En savoir plus
             <ArrowRight className="ml-2" />
           </Link>

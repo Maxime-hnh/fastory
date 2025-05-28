@@ -1,6 +1,6 @@
 
 import { SearchResult } from 'src/types/search-result.type';
-import { SWAPI_TYPES } from '../constants/swapi';
+import { SWAPI_TYPES, SwapiType, SwapiTypeMap } from '../constants/swapi';
 import { SEARCHABLE_FIELDS } from '../constants/swapi';
 
 type SwapiDataCache = {
@@ -22,13 +22,13 @@ class SwapiService {
     };
   };
 
-  private fetchDataType = async (type: string): Promise<any> => {
+  private fetchDataType = async (type: SwapiType): Promise<any> => {
     const res = await fetch(`${process.env.SWAPI_URL}${type}`)
     const data = await res.json();
     return data;
   };
 
-  public async searchAll(query: string): Promise<SearchResult[]> {
+  public async search(query: string): Promise<SearchResult[]> {
     if (Object.keys(this.cache).length === 0) {
       if (!this.isLoading) {
         this.isLoading = true;
@@ -58,12 +58,19 @@ class SwapiService {
   };
 
 
+  public getById = async (type: SwapiType, id: number): Promise<any> => {
+    const res = await fetch(`${process.env.SWAPI_URL}${type}/${id}`)
+    const data = await res.json();
+    return data;
+  }
+
 
   public getAll = async (): Promise<SearchResult[]> => {
-    const promises = SWAPI_TYPES.map(async (type) => {
-      const items = await this.fetchDataType(type);
-      return { type, items };
-    });
+    const promises = SWAPI_TYPES.map(
+      async (type) => {
+        const items = await this.fetchDataType(type);
+        return { type, items };
+      });
 
     return Promise.all(promises);
   }

@@ -5,7 +5,12 @@ const swapiRoutes: ServerRoute[] = [
   {
     method: 'GET',
     path: '/search',
-    handler: swapiController.searchAll
+    handler: swapiController.search
+  },
+  {
+    method: 'GET',
+    path: '/details/{type}/{id}',
+    handler: swapiController.getById
   },
   {
     method: 'GET',

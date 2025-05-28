@@ -2,15 +2,13 @@
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Search, SearchSchema } from "@/_schemas/search.schema";
+import { Search, SearchSchema, Types } from "@/_schemas/search.schema";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
-import { Button } from "./ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/_stores/store";
-import { setSearchTerm, setLoading, setResults, setError } from "@/_stores/searchSlice";
-import { searchService } from "@/_services/search.service";
+import { setSearchTerm, setLoading, setResults, setError, setActiveTab } from "@/_stores/searchSlice";
+import { swapiService } from "@/_services/swapi.service";
 import { RootState } from "@/_stores/store";
-import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { debounce } from "@/_helpers/utils";
 import { useMemo } from "react";
@@ -18,8 +16,8 @@ import { useMemo } from "react";
 export default function SearchForm() {
 
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((state: RootState) => state.search);
-  const { search } = searchService;
+  const { isLoading, activeTab } = useSelector((state: RootState) => state.search);
+  const { search } = swapiService;
 
   const form = useForm<Search>({
     resolver: zodResolver(SearchSchema),
@@ -38,8 +36,16 @@ export default function SearchForm() {
     dispatch(setError(null));
 
     try {
-      const results = await searchService.search(term);
+      const results = await search(term);
       dispatch(setResults(results));
+      if (results.length > 0) {
+        const firstType = results[0].type as Types;
+        const currentTypes = results.map((r: any) => r.type);
+        const currentTab = activeTab;
+        if (!currentTypes.includes(currentTab)) {
+          dispatch(setActiveTab(firstType));
+        }
+      }
     } catch (error: any) {
       dispatch(setError(error?.message || "Erreur inattendue"));
     } finally {
@@ -47,7 +53,6 @@ export default function SearchForm() {
     }
   }, 500), [dispatch]);
 
-  // ✅ Déclenche le debounce quand le champ change
   useEffect(() => {
     const subscription = form.watch(({ search }) => {
       debouncedSearch(search || "");

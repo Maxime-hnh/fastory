@@ -1,7 +1,7 @@
 import { authHeader } from "@/_helpers/auth-header"
 import { handleResponse } from "@/_helpers/handle-response"
 
-class SearchService {
+class SwapiService {
   constructor() { }
 
   search = async (query: string): Promise<any> => {
@@ -11,7 +11,15 @@ class SearchService {
     }
     return await handleResponse(await fetch(`/api/search/?q=${encodeURI(query)}`, requestOptions));
   };
+
+  getById = async (type: string, id: string): Promise<any> => {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader(),
+    }
+    return await handleResponse(await fetch(`/api/details/${type}/${id}`, requestOptions));
+  };
 }
 
-const searchService = new SearchService();
-export { searchService };
+const swapiService = new SwapiService();
+export { swapiService };

@@ -6,6 +6,7 @@ interface SearchState {
   data: { type: Types; items: any[] }[];
   isLoading: boolean;
   error: string | null;
+  activeTab: Types;
 }
 
 const initialState: SearchState = {
@@ -13,6 +14,7 @@ const initialState: SearchState = {
   data: [],
   isLoading: false,
   error: null,
+  activeTab: Types.FILMS,
 };
 
 const searchSlice = createSlice({
@@ -31,14 +33,18 @@ const searchSlice = createSlice({
     setError(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
     },
+    setActiveTab(state, action: PayloadAction<Types>) {
+      state.activeTab = action.payload;
+    },
     resetSearch(state) {
       state.data = [];
       state.term = '';
       state.isLoading = false;
       state.error = null;
+      state.activeTab = Types.FILMS;
     },
   },
 });
 
-export const { setSearchTerm, setLoading, setResults, setError, resetSearch } = searchSlice.actions;
+export const { setSearchTerm, setLoading, setResults, setError, setActiveTab, resetSearch } = searchSlice.actions;
 export default searchSlice.reducer;
