@@ -125,10 +125,13 @@ L'application client démarrera sur `http://localhost:3000` (ou le prochain port
 
 ## API Backend
 
-Le serveur expose plusieurs endpoints pour interagir avec l'API SWAPI. Les principales routes incluent :
-- `/api/people` : Récupération des personnages
-- `/api/planets` : Récupération des planètes
-- `/api/starships` : Récupération des vaisseaux spatiaux
+Le serveur expose 3 endpoints pour interagir avec l'API SWAPI. Les routes incluent :
+- `/api/swapi/search` : Recherche sur toutes les catégories
+- `/api/swapi/details/{type}/{id}` : Récupération d'une entité
+- `/api/swapi/all` : Récupération de toutes les catégories
+
+- `/api/auth/me` : Utilise la stratégie `@hapi/basic` configurée globalement.
+- Identifiants : `Luk` / `DadSucks`
 
 ## Technologies utilisées
 
@@ -145,25 +148,3 @@ Le serveur expose plusieurs endpoints pour interagir avec l'API SWAPI. Les princ
 ### Serveur
 - Hapi.js
 - TypeScript
-- Nodemon (pour le rechargement automatique en développement)
-
-## Déploiement
-
-Pour déployer l'application en production :
-
-1. Construisez le client :
-   ```bash
-   cd client
-   pnpm build
-   ```
-
-2. Déployez le serveur et le client sur votre plateforme préférée (Vercel, Netlify, etc.)
-
-## Contribution
-
-Si vous souhaitez contribuer à ce projet :
-
-1. Créez une branche pour votre fonctionnalité (`git checkout -b feature/amazing-feature`)
-2. Committez vos changements (`git commit -m 'Add some amazing feature'`)
-3. Poussez vers la branche (`git push origin feature/amazing-feature`)
-4. Ouvrez une Pull Request
