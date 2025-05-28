@@ -9,6 +9,7 @@ import PreviewCardSkeleton from "./PreviewCardSkeleton";
 import { setActiveTab } from "@/_stores/searchSlice";
 import { useDispatch } from "react-redux";
 import { Types, TypesIconMap } from "@/_helpers/constants";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function TabsResults() {
 
@@ -16,17 +17,17 @@ export default function TabsResults() {
   const { data, isLoading, activeTab } = useSelector((state: RootState) => state.search);
 
   return (
-    <section className="py-16">
+    <section className="py-0 md:py-16">
       <div className="container mx-auto">
         <Tabs value={activeTab} onValueChange={(value) => dispatch(setActiveTab(value as Types))} className="mt-8">
-          <TabsList className="mb-8 container bg-transparent flex flex-col items-center justify-center gap-4 sm:flex-row md:gap-10">
+          <TabsList className="mb-8 container bg-transparent flex flex-row overflow-x-auto items-center justify-center gap-4 lg:gap-10">
             {Object.values(Types).map((type, i) => {
               const Icon = TypesIconMap[type].icon;
               return (
                 <TabsTrigger
                   key={i}
                   value={type}
-                  className={`flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-muted-foreground ${TypesIconMap[type].bgColorActive} data-[state=active]:text-primary`}
+                  className={`flex items-center justify-center gap-2 rounded-xl px-2 lg:px-4 py-3 text-sm font-semibold text-muted-foreground ${TypesIconMap[type].bgColorActive} data-[state=active]:text-primary`}
                 >
                   <Icon className="h-auto w-4 shrink-0" />
                   {type}
@@ -40,27 +41,29 @@ export default function TabsResults() {
             const category = data?.find((cat: any) => cat.type === type);
             return (
               <TabsContent key={i} value={type}>
-                {isLoading && (
-                  <div className="py-16">
-                    <div className="container px-0 md:px-8">
-                      {[...Array(3)].map((_, i) => (
-                        <Fragment key={i}>
-                          <PreviewCardSkeleton />
-                          <Separator className="w-full h-px bg-border" />
-                        </Fragment>
-                      ))}
+                <ScrollArea className="w-full h-[400px] lg:h-[500px]">
+                  {isLoading && (
+                    <div className="py-16">
+                      <div className="container px-0 md:px-8">
+                        {[...Array(3)].map((_, i) => (
+                          <Fragment key={i}>
+                            <PreviewCardSkeleton />
+                            <Separator className="w-full h-px bg-border" />
+                          </Fragment>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoading && !category && (
-                  <p className="text-center">Aucun résultat pour {type}...</p>
-                )}
-                {category && category.items.map((item, j) => (
-                  <Fragment key={j}>
-                    <PreviewCard data={item} type={category.type} />
-                    <Separator className="w-full h-px bg-border" />
-                  </Fragment>
-                ))}
+                  )}
+                  {!isLoading && !category && (
+                    <p className="text-center">Aucun résultat pour {type}...</p>
+                  )}
+                  {category && category.items.map((item, j) => (
+                    <Fragment key={j}>
+                      <PreviewCard data={item} type={category.type} />
+                      <Separator className="w-full h-px bg-border" />
+                    </Fragment>
+                  ))}
+                </ScrollArea>
               </TabsContent>
             );
           })}
