@@ -12,7 +12,7 @@ interface FilmsDetailsCardProps {
 export default function FilmsDetailsCard({ data }: FilmsDetailsCardProps) {
 
   return (
-    <Card id="peopleDetailsCard" >
+    <Card id="filmsDetailsCard" >
       <CardContent className="flex flex-col sm:flex-row gap-4">
 
         {/*LeftContent*/}
