@@ -1,5 +1,6 @@
 import { Request, ResponseToolkit } from '@hapi/hapi';
 import { swapiService } from '../services/swapi.service';
+import Boom from '@hapi/boom';
 
 class SwapiController {
   constructor() {
@@ -10,8 +11,9 @@ class SwapiController {
 
   search = async (req: Request, h: ResponseToolkit) => {
     const { q } = req.query;
-    if (!q) {
-      return h.response({ error: 'Query parameter is missing' }).code(400);
+
+    if (!q || typeof q !== 'string') {
+      throw Boom.badRequest('The "q" query parameter is required.');
     }
     try {
       const res = await swapiService.search(q);
@@ -19,7 +21,7 @@ class SwapiController {
 
     } catch (error) {
       console.error(error)
-      return h.response().code(500);
+      throw Boom.internal('An error occurred while searching.');
     }
   };
 
@@ -27,10 +29,10 @@ class SwapiController {
     const { id, type } = req.params;
     try {
       const res = await swapiService.getById(type, id)
-      if (!res) return h.response().code(404)
+      if (!res) throw Boom.notFound('Data not found.');
       return h.response(res).code(200)
     } catch (error) {
-      return h.response().code(500)
+      throw Boom.internal('An error occurred while getting data.');
     }
   }
 
@@ -40,7 +42,7 @@ class SwapiController {
       return h.response(res).code(200);
 
     } catch (error) {
-      return h.response().code(500);
+      throw Boom.internal('An error occurred while getting all data.');
     }
   }
 }

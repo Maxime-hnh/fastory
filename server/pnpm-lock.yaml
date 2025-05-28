@@ -11,6 +11,9 @@ importers:
       '@hapi/basic':
         specifier: ^7.0.2
         version: 7.0.2
+      '@hapi/boom':
+        specifier: ^10.0.1
+        version: 10.0.1
       '@hapi/hapi':
         specifier: ^21.4.0
         version: 21.4.0

@@ -14,14 +14,15 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useLoginMutation } from "@/_mutations/auth/useLoginMutation";
-import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/dialog";
+import { Loader2Icon } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/_stores/store";
 
 export default function LoginForm() {
 
   const { mutate: login, isPending } = useLoginMutation();
-  const { dialogOpen } = useSelector((state: RootState) => state.auth);
+  const loggedUser = useSelector((state: RootState) => state.auth.loggedUser);
 
   const form = useForm<AuthRequest>({
     resolver: zodResolver(Authschema),
@@ -36,12 +37,12 @@ export default function LoginForm() {
   }
 
   return (
-    <Dialog open={dialogOpen} onOpenChange={() => { }}>
+    <Dialog open={loggedUser?.token ? false : true} onOpenChange={() => { }}>
       <DialogContent>
         <div className="flex flex-col">
           <div className="flex flex-col gap-2 mb-8">
             <DialogTitle className="text-2xl font-[900] text-center">Bienvenue jeune padawan</DialogTitle>
-            <span className="text-xs text-center">Avant de commencer votre quête, vous devez vous authentifier</span>
+            <DialogDescription className="text-xs text-center">Avant de commencer votre quête, vous devez vous authentifier</DialogDescription>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(submit)} className="flex flex-col gap-6 w-full">
@@ -52,7 +53,7 @@ export default function LoginForm() {
                   <FormItem className="w-full">
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="username" {...field} />
+                      <Input placeholder="Saisissez votre username" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -72,7 +73,11 @@ export default function LoginForm() {
                 )}
               />
               <Button type="submit">
-                Se connecter</Button>
+                {isPending
+                  ? <Loader2Icon className="ml-2 h-4 w-4 animate-spin" />
+                  : "Se connecter"
+                }
+              </Button>
             </form>
           </Form>
         </div>

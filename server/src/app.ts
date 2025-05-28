@@ -1,6 +1,7 @@
 import { Request, ResponseToolkit, Server } from '@hapi/hapi';
 import { registerRoutes } from './plugins/routes';
 import dotenv from 'dotenv';
+import Boom from '@hapi/boom';
 dotenv.config();
 
 const user = {
@@ -14,7 +15,12 @@ const user = {
 const validate = async (req: Request, username: string, password: string, h: ResponseToolkit) => {
 
   const isValid = username === user.username && password === user.password;
-  if (!isValid) return { credentials: null, isValid: false };
+  if (!isValid) {
+    return h.unauthenticated(
+      Boom.unauthorized(null, 'Basic'),
+      { credentials: null as any }
+    );
+  }
 
   const credentials = { id: user.id, name: user.username, role: user.role }
   return { isValid, credentials }
