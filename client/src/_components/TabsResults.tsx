@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import PreviewCard from "./PreviewCard";
 import { Fragment } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import PreviewCardSkeleton from "./PreviewCardSkeleton";
 import { setActiveTab } from "@/_stores/searchSlice";
 import { useDispatch } from "react-redux";
 import { Types, TypesIconMap } from "@/_helpers/constants";
@@ -42,18 +41,6 @@ export default function TabsResults() {
             return (
               <TabsContent key={i} value={type}>
                 <ScrollArea className="w-full h-[400px] lg:h-[500px]">
-                  {isLoading && (
-                    <div className="py-16">
-                      <div className="container px-0 md:px-8">
-                        {[...Array(3)].map((_, i) => (
-                          <Fragment key={i}>
-                            <PreviewCardSkeleton />
-                            <Separator className="w-full h-px bg-border" />
-                          </Fragment>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                   {!isLoading && !category && (
                     <p className="text-center">Aucun résultat pour {type}...</p>
                   )}

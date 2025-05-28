@@ -1,11 +1,13 @@
 
 import { SearchResult } from 'src/types/search-result.type';
-import { SWAPI_TYPES, SwapiType, SwapiTypeMap } from '../constants/swapi';
+import { SWAPI_TYPES, SwapiType } from '../constants/swapi';
 import { SEARCHABLE_FIELDS } from '../constants/swapi';
 
 type SwapiDataCache = {
   [type: string]: any[];
 };
+
+const SWAPI_URL = "https://swapi.info/api/"
 
 class SwapiService {
   private cache: SwapiDataCache = {};
@@ -23,7 +25,7 @@ class SwapiService {
   };
 
   private fetchDataType = async (type: SwapiType): Promise<any> => {
-    const res = await fetch(`${process.env.SWAPI_URL}${type}`)
+    const res = await fetch(`${SWAPI_URL}${type}`)
     const data = await res.json();
     return data;
   };
@@ -59,7 +61,7 @@ class SwapiService {
 
 
   public getById = async (type: SwapiType, id: number): Promise<any> => {
-    const res = await fetch(`${process.env.SWAPI_URL}${type}/${id}`)
+    const res = await fetch(`${SWAPI_URL}${type}/${id}`)
     const data = await res.json();
     return data;
   }

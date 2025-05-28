@@ -1,13 +1,11 @@
 import { Request, ResponseToolkit, Server } from '@hapi/hapi';
 import { registerRoutes } from './plugins/routes';
-import dotenv from 'dotenv';
 import Boom from '@hapi/boom';
-dotenv.config();
 
 const user = {
   id: 1,
-  username: process.env.AUTH_USERNAME,
-  password: process.env.AUTH_PASSWORD,
+  username: "Luke",
+  password: "DadSucks",
   role: "superadmin"
 };
 
@@ -28,7 +26,7 @@ const validate = async (req: Request, username: string, password: string, h: Res
 
 const init = async (): Promise<void> => {
   const server = new Server({
-    port: parseInt(process.env.PORT || '3001'),
+    port: 3001,
     host: 'localhost'
   });
   await server.register(require('@hapi/basic'));
