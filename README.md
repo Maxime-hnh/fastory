@@ -157,9 +157,8 @@ Remarque sur le cache SWAPI : Lors du démarrage du serveur, un service de cache
 - Redux Toolkit
 - TanStack Query
 - Tailwind CSS
-- Radix UI
+- Shadcn
 - Zod
-- Vitest
 
 ### Serveur
 - Hapi.js
