@@ -12,8 +12,8 @@ const sora = Sora({
 
 
 export const metadata: Metadata = {
-  title: "Title",
-  description: "Description",
+  title: "Fastory",
+  description: "Exercice SWAPI",
   icons: {
     icon: '/favicon.ico'
   },
