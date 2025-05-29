@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from "@/_components/ui/card";
 
 export default function Loading() {
   return (
-    <Card id="peopleDetailsCard" >
+    <Card id="loadingDetailsCard" >
       <CardContent className="flex flex-col sm:flex-row gap-4">
 
         {/*LeftContent*/}
