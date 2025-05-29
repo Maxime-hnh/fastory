@@ -7,11 +7,14 @@ import { Provider } from 'react-redux'
 import { store } from "../_stores/store";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "../_core/query-client";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export function PublicProviders(props: PropsWithChildren) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+
       <Provider store={store}>
         <Toaster />
         <div className="flex min-h-screen flex-col" id="rootLayout">
