@@ -4,9 +4,9 @@ import { SWAPI_TYPES, SwapiType } from '../constants/swapi';
 import { SEARCHABLE_FIELDS } from '../constants/swapi';
 import fs from 'fs/promises';
 
-const SWAPI_URL = "https://swapi.info/api/"
+const SWAPI_URL = "https://swapi.info/api/";
 const CACHE_FILE_PATH = './src/tmp/swapi.json';
-const ONE_DAY = 1000 * 60
+const ONE_DAY = 1000 * 60 * 60 * 24;
 
 class SwapiService {
   private cache: Record<SwapiType, any[]> = {

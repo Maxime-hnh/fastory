@@ -97,6 +97,12 @@ Pour le mode debug :
 pnpm start:debug
 ```
 
+Remarque sur le cache SWAPI : Lors du démarrage du serveur, un service de cache est initialisé via await swapiService.init(); dans app.ts. Ce cache permet de :
+- Précharger toutes les données de l'API SWAPI (films, personnages, etc.)
+- Les stocker en mémoire et sur disque (/src/tmp/swapi.json)
+- Réutiliser ces données localement pour éviter les appels réseau successifs
+- Revalider les données expirées (toutes les 24h) en lazy, uniquement lors de la première requête suivante
+
 ### Démarrer le client frontend
 
 Dans un nouveau terminal :
