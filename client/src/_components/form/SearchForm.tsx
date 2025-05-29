@@ -35,8 +35,8 @@ export default function SearchForm() {
           const results = await search(cleanedSearchValue);
           dispatch(setResults(results));
           if (results.length > 0) {
-            const firstType = results[0].type;
-            const currentTypes = results.map((cat: any) => cat.type);
+            const firstType = results.find((cat: any) => cat.items.length > 0)?.type;
+            const currentTypes = results.filter((cat: any) => cat.items.length > 0).map((cat: any) => cat.type);
             if (!currentTypes.includes(activeTab)) {
               dispatch(setActiveTab(firstType));
             }

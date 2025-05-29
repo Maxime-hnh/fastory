@@ -1,6 +1,7 @@
 import { Request, ResponseToolkit, Server } from '@hapi/hapi';
 import { registerRoutes } from './plugins/routes';
 import Boom from '@hapi/boom';
+import { swapiService } from './services/swapi.service';
 
 const user = {
   id: 1,
@@ -34,6 +35,7 @@ const init = async (): Promise<void> => {
   server.auth.default('simple');
 
   await registerRoutes(server);
+  await swapiService.init();
   await server.start();
   console.log('🚀 Server running on :', server.info.uri);
 };
