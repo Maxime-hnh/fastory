@@ -66,7 +66,7 @@ export default function LoginForm() {
                   <FormItem className="w-full">
                     <FormLabel>Mot de passe</FormLabel>
                     <FormControl>
-                      <Input placeholder="Saisissez votre mot de passe" className="w-full" {...field} />
+                      <Input placeholder="Saisissez votre mot de passe" type="password" className="w-full" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -21,7 +21,7 @@ const validate = async (req: Request, username: string, password: string, h: Res
     );
   }
 
-  const credentials = { id: user.id, name: user.username, role: user.role }
+  const credentials = { id: user.id, username: user.username, role: user.role }
   return { isValid, credentials }
 }
 
