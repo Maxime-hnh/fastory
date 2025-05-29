@@ -97,12 +97,6 @@ Pour le mode debug :
 pnpm start:debug
 ```
 
-Remarque sur le cache SWAPI : Lors du démarrage du serveur, un service de cache est initialisé via await swapiService.init(); dans app.ts. Ce cache permet de :
-- Précharger toutes les données de l'API SWAPI (films, personnages, etc.)
-- Les stocker en mémoire et sur disque (/src/tmp/swapi.json)
-- Réutiliser ces données localement pour éviter les appels réseau successifs
-- Revalider les données expirées (toutes les 24h) en lazy, uniquement lors de la première requête suivante
-
 ### Démarrer le client frontend
 
 Dans un nouveau terminal :
@@ -147,6 +141,13 @@ Le serveur expose plusieurs endpoints pour interagir avec l'API SWAPI et gérer 
 
 ⚠️ Cette route nécessite l’envoi de l’en-tête `Authorization` avec les identifiants codés en base64.  
 Par exemple : `Luke:DadSucks` → `Authorization: Basic THVrZTpEYWRTdWNrcw==`
+
+
+Remarque sur le cache SWAPI : Lors du démarrage du serveur, un service de cache est initialisé via await swapiService.init(); dans app.ts. Ce cache permet de :
+- Précharger toutes les données de l'API SWAPI (films, personnages, etc.)
+- Les stocker en mémoire et sur disque (/src/tmp/swapi.json)
+- Réutiliser ces données localement pour éviter les appels réseau successifs
+- Revalider les données expirées (toutes les 24h) en lazy, uniquement lors de la première requête suivante
 
 ## Technologies utilisées
 
