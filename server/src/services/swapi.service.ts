@@ -3,9 +3,12 @@ import { SearchResult } from 'src/types/search-result.type';
 import { SWAPI_TYPES, SwapiType } from '../constants/swapi';
 import { SEARCHABLE_FIELDS } from '../constants/swapi';
 import fs from 'fs/promises';
+import { existsSync } from 'fs';
+import path from 'path';
 
 const SWAPI_URL = "https://swapi.info/api/";
-const CACHE_FILE_PATH = './src/tmp/swapi.json';
+const TMP_DIR = './src/tmp';
+const CACHE_FILE_PATH = path.join(TMP_DIR, 'swapi.json');
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 class SwapiService {
@@ -25,6 +28,11 @@ class SwapiService {
 
   public async init() {
     try {
+      if (!existsSync(TMP_DIR)) {
+        await fs.mkdir(TMP_DIR, { recursive: true });
+        console.log('📁 [SWAPI] Create tmp directory');
+      }
+
       console.log('⏳ [SWAPI] Loading cache...');
       const json = await fs.readFile(CACHE_FILE_PATH, 'utf-8');
       const { lastUpdated, data } = JSON.parse(json);
