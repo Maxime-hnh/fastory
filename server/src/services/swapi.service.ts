@@ -34,6 +34,9 @@ class SwapiService {
       }
 
       console.log('⏳ [SWAPI] Loading cache...');
+      if (!existsSync(CACHE_FILE_PATH)) {
+        throw new Error('❌ Cache file not found');
+      }
       const json = await fs.readFile(CACHE_FILE_PATH, 'utf-8');
       const { lastUpdated, data } = JSON.parse(json);
       const isFresh = lastUpdated && (Date.now() - lastUpdated) < ONE_DAY;
