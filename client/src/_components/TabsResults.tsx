@@ -36,26 +36,23 @@ export default function TabsResults() {
               )
             })}
           </TabsList>
-          {Object.values(Types).map((type, i) => {
-            const category = data?.find((cat: any) => cat.type === type);
-            return (
-              <TabsContent key={i} value={type}>
-                <ScrollArea className="w-full h-[400px] lg:h-[500px]">
-                  {!isLoading && !category && (
-                    <p className="text-center">Aucun résultat pour {type}...</p>
-                  )}
-                  {category && category.items.map((item, j) => (
-                    <Fragment key={j}>
-                      <PreviewCard data={item} type={category.type} />
-                      <Separator className="w-full h-px bg-border" />
-                    </Fragment>
-                  ))}
-                </ScrollArea>
-              </TabsContent>
-            );
-          })}
+          {data.map((d, i) => (
+            < TabsContent key={i} value={d.type}>
+              <ScrollArea className="w-full h-[400px] lg:h-[500px]">
+                {!isLoading && d.items.length < 1 && (
+                  <p className="text-center">Aucun résultat pour {d.type}...</p>
+                )}
+                {d.items.map((item, j) => (
+                  <Fragment key={j}>
+                    <PreviewCard data={item} type={d.type} />
+                    <Separator className="w-full h-px bg-border" />
+                  </Fragment>
+                ))}
+              </ScrollArea>
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
-    </section>
+    </section >
   )
 }

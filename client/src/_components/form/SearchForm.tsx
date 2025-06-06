@@ -2,22 +2,18 @@
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/_stores/store";
-import { setIsLoading, setResults, setError, setActiveTab, resetSearch } from "@/_stores/searchSlice";
+import { setIsLoading, setResults, setError, setActiveTab, resetSearch, setQuery } from "@/_stores/searchSlice";
 import { swapiService } from "@/_services/swapi.service";
 import { RootState } from "@/_stores/store";
-import { useEffect, useState } from "react";
 import { debounce } from "@/_helpers/utils";
 import { useMemo } from "react";
 import { Loader2Icon, SearchIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
 
 export default function SearchForm() {
 
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, activeTab } = useSelector((state: RootState) => state.search);
+  const { isLoading, activeTab, query } = useSelector((state: RootState) => state.search);
   const { search } = swapiService;
-  const [query, setQuery] = useState("");
-  const pathname = usePathname();
 
   const debouncedSearch = useMemo(
     () =>
@@ -52,15 +48,14 @@ export default function SearchForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setQuery(value);
+    dispatch(setQuery(value));
     debouncedSearch(value);
   };
 
 
-  useEffect(() => {
-    dispatch(resetSearch());
-    setQuery("");
-  }, [pathname]);
+  // useEffect(() => {
+  //   dispatch(resetSearch());
+  // }, [pathname]);
 
 
   return (
